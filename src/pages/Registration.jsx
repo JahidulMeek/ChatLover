@@ -4,9 +4,12 @@ import Grid from '@mui/material/Grid';                  // ami শুধুই G
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { useState } from 'react';
+import { getAuth, createUserWithEmailAndPassword,sendEmailVerification  } from "firebase/auth";
+  import { ToastContainer, toast } from 'react-toastify';
+import { Bars } from 'react-loader-spinner';
 //******TextField customization start******/
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -40,6 +43,8 @@ const CssTextField = styled(TextField)({
 });
 //***********button Customization end****** */
 const Registration = () => {
+  const auth = getAuth();
+     let navigate= useNavigate();
    let[showpassword,setShowpassword] = useState(false);
 
    let[email,setEmail] = useState("")
@@ -48,6 +53,8 @@ const Registration = () => {
    let [emailerror,setEmailerror]=useState("")
    let[nameerror,setNameerror]=useState("")
    let[passworderror,setPassworderror]=useState("")
+   let [loader, setLoader]=useState(false)
+  
  let handlepass=()=>{
  setShowpassword(!showpassword)
  }
@@ -69,7 +76,7 @@ const Registration = () => {
   // console.log(name)
   // console.log(password)
   if(!email){
-    setEmailerror("  Email is needed")
+    setEmailerror("Give Email")
     
   }else{
      if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)){
@@ -78,10 +85,10 @@ const Registration = () => {
   }
 
   if(!name){
-    setNameerror("Name is needed")
+    setNameerror("Give your Name")
   }
   if(!password){
-    setPassworderror("Password is needed");
+    setPassworderror("Give email password");
   }
  else if(!/^(?=.*[a-z])/.test(password)){
   setPassworderror("Give a lower case");
@@ -95,13 +102,35 @@ else if(!/(?=.*\d)/.test(password)){
 else if(!/(?=.*[@$!%*?&])/.test(password)){
   setPassworderror("Give a special character")
 }
-else if(!/[A-Za-z\d@$!%*?&]{8,}$/.test(password)){
+else if(!/[A-Z a-z\d@$!%*?&]{8,}$/.test(password)){
   setPassworderror("at least 8 character long")
+}
+if(email && password && name ){
+   setLoader(true)
+   createUserWithEmailAndPassword(auth, email, password)
+   .then((user) => {
+    sendEmailVerification(auth.currentUser)
+    .then(() => {
+       console.log(user.user)
+      toast.success("Registration is Successful");
+      setEmail("")
+      setName("");
+      setPassword("")
+      setLoader(false);
+      setTimeout(()=>{
+         navigate('/login')
+      },2000)
+         
+  });  
+  })
+  .catch((error) => {
+    const errorCode = error.code; 
+    
+  });
+
 }
   
  };
- 
-
  
  //***TextField a input accept end */
   return (
@@ -112,21 +141,36 @@ else if(!/[A-Za-z\d@$!%*?&]{8,}$/.test(password)){
           <div className='reg-content'>
              <h2>Get started with easily register</h2>
              <p>Free register and you can enjoy it</p>
+             <ToastContainer
+               position="top-center"
+               autoClose={5000}
+               hideProgressBar={false}
+               newestOnTop={false}
+               closeOnClick={false}
+               rtl={false}
+               pauseOnFocusLoss
+               draggable
+               pauseOnHover
+               theme="colored"
+               
+               />
               <div className='error-box'>
-              <CssTextField onChange={handleEmail} type="email" id="outlined-basic" label="Email Address" variant="outlined" />
+              <CssTextField value={email} onChange={handleEmail} type="email" id="outlined-basic" label="Email Address" variant="outlined" />
              { emailerror &&  <h5 className='error'>{emailerror}</h5>}
              
           </div>
           
            <div className='error-box'>
-             <CssTextField onChange={handleName} id="outlined-basic" label="Full name" variant="outlined" />
+             <CssTextField value={name} onChange={handleName} id="outlined-basic" label="Full name" variant="outlined" />
              {nameerror && <h5 className='error'>{nameerror}</h5>}
            </div>
 
              <div className='passwrd-input'>
             <div className='error-box'>
-                 <CssTextField onChange={handlePassword}  type={showpassword? "text":"password"} id="outlined-basic" label="Password" variant="outlined" />
-                 {passworderror && <h5 className='error'>{passworderror}</h5>}
+                 <CssTextField value={password} onChange={handlePassword}  type={showpassword? "text":"password"} id="outlined-basic" label="Password" variant="outlined" />
+                 {
+                 passworderror && <h5 className='error'>{passworderror}</h5>
+                 }
             </div>
                <div onClick={handlepass} className='icon-box'>
                   {
@@ -137,7 +181,21 @@ else if(!/[A-Za-z\d@$!%*?&]{8,}$/.test(password)){
                   }
                </div>
              </div>
+              {
+                loader ?
+                <Bars
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  ariaLabel="bars-loading"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                  />
+                :
                <Mybutton onClick={handleSignup} variant="contained">Sign up</Mybutton>
+             
+              }
               <p id='sign-In'>Already  have an account ?<Link to="/Login"><span > Sign In</span></Link></p>
              </div>
              

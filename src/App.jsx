@@ -9,12 +9,17 @@ import {  //react-router-dom থেকে রাউটিং এর জন্য
 } from "react-router-dom";
 import Login from './pages/Login';
 import Registration from './pages/Registration';
+import Homepage from './pages/Homepage';
+import Forgetpassword from './pages/Forgetpassword';
 
  const router = createBrowserRouter(   
   createRoutesFromElements(
    <>
      <Route path="/login" element={<Login />} ></Route>
-    <Route path="/registration" element={<Registration/>} ></Route>
+    <Route path="/" element={<Registration/>} ></Route>
+    <Route path="/home" element={<Homepage/>} ></Route>
+    <Route path="/forgerpassword" element={<Forgetpassword/>}></Route>
+ 
    </>
    
   )

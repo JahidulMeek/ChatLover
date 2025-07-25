@@ -43,9 +43,10 @@
     margin-top:13px;
     margin-bottom:20px;    
 }
-#sign-In{
+ .reg-content-box p:last-child{ /* here #sign-In nia kaj korlau hobe.ami .reg-content-box ar vitore p tag ar last hisebe p tag ke dhoresi  */
     margin-left:30px;
     font-size: 10px ;
+   
 }
 #sign-In a{
     color:red;
@@ -98,3 +99,61 @@
     padding:2px 5px;
    
 }
+/* ********forget password  action start*/
+.forgetbutton{
+    color:red;
+    font-size:10px;
+    font-weight: semibold;
+    font-family: "Open Sans", sans-serif;
+    padding:2px 1px;
+     margin-left:55px;
+    
+     border:0px  solid green;
+     border-radius:2px;
+    
+}
+
+.new-ui-for-forgetpassword{
+    width:100%;
+    height:100vh;
+    background-color: rgb(240, 237, 235);
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index: 3;
+   
+   
+}
+
+.forgetpassword-box{
+     width:400px;
+     height:56px;
+     background-color: white;
+     padding:100px 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    position:relative;
+   
+  
+}
+.forgetpassword-email{
+    width:100% !important;
+    padding-bottom:0 !important;
+}
+.forgetpassword-button-box{
+    display:flex;
+    column-gap:10px;
+}
+.forgetemailerror{
+    position:absolute;
+    top:70px;                /*    here top ar value dile design  haria jasse keno   */
+    left:116px;
+    color:red;
+    font-size:20px;
+    font-weight: 400;
+}
+
+
+/*  {/*spacing={2} মানে হল →  Grid item গুলোর মাঝখানে 2 unit = 16px ফাঁকা থাকবে। */ 
