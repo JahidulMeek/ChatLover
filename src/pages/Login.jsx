@@ -10,6 +10,8 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword,GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "firebase/auth";
   import { ToastContainer, toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { userdetails } from '../Slices/userInfoSlice';
 //******TextField customization start******/
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -57,6 +59,9 @@ let [forgetemail,setforgetemail]=useState("")
 let [forgetemailerror,setforgetemailerror]=useState("")
 let [forgetui , setForgetui]=useState(true)
 // ************ for forget password usestate part end***********
+//******* for Redux useDispatch()  start*/
+let dispatch=useDispatch() // here dispatch is a variable and useDispatch hook is assigned here.
+//*******Redux useDispatch()  end*/
 
   let handlepass=()=>{
   setShowpassword(!showpassword)
@@ -82,6 +87,11 @@ let handleSignin=()=>{
 if(email && password){
  signInWithEmailAndPassword(auth, email, password)
   .then((user) => {
+    //console.log(user.user)
+    dispatch(userdetails(user.user)) // userDispatch is used to send userdetails to Redux store from Login component.
+    //localStorage.setItem("name","Jahidul") //in local storage have to take data according to string all time.
+    localStorage.setItem("userinfo",JSON.stringify(user.user)) //here user.user is converted to string format by JSON.stringify()
+
     if(user.user.emailVerified){
    //console.log("Login done");
    navigate('/home')
