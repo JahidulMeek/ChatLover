@@ -11,15 +11,24 @@ import Login from './pages/Login';
 import Registration from './pages/Registration';
 import Homepage from './pages/Homepage';
 import Forgetpassword from './pages/Forgetpassword';
+import RootLayout from './lauouts/RootLayout';
+import Message from './pages/Message';
+import Notification from './pages/Notification';
+import Setting from './pages/Setting';
 
  const router = createBrowserRouter(   
   createRoutesFromElements(
    <>
      <Route path="/login" element={<Login />} ></Route>
     <Route path="/" element={<Registration/>} ></Route>
-    <Route path="/home" element={<Homepage/>} ></Route>
     <Route path="/forgerpassword" element={<Forgetpassword/>}></Route>
- 
+   
+    <Route path="/pages" element={<RootLayout/>} >
+     <Route path="home" element={<Homepage/>} ></Route>
+      <Route path="message" element={<Message/>} ></Route>
+      <Route path="notification" element={<Notification/>} ></Route>
+      <Route path="setting" element={<Setting/>} ></Route>
+    </Route>
    </>
    
   )
@@ -29,7 +38,7 @@ import Forgetpassword from './pages/Forgetpassword';
 const App = () => {
   return (
     <div>
-    <RouterProvider router={router} />  {/* */}
+    <RouterProvider router={router} /> 
      
     </div>
   )

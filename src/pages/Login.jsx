@@ -94,7 +94,7 @@ if(email && password){
 
     if(user.user.emailVerified){
    //console.log("Login done");
-   navigate('/home')
+   navigate('/pages/home')
   }else{
     toast.error("Go to your Email and verify")
   }
@@ -117,7 +117,7 @@ let handleGoogle=()=>{
   //console.log("googlle kaj kore")
   signInWithPopup(auth, provider)
   .then((result) => { 
-      navigate('/home')
+      navigate('/pages/home')
   }).catch((error) => {
     const errorCode = error.code;
      console.log("google kaj kore nah")

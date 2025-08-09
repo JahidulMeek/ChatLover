@@ -14,7 +14,7 @@ const Homepage = () => {
   },[])
   return (
     <div>Homepage
-      <h2> Md. Jahidul Islam developer</h2>
+      
     </div>
   )
 }
