@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import Grid from '@mui/material/Grid';
+import Userlist from '../lauouts/Userlist';
 
 const Homepage = () => {
   let navigate=useNavigate()
@@ -13,7 +15,24 @@ const Homepage = () => {
 
   },[])
   return (
-    <div>Homepage
+    <div className='grid-devision'>
+      <Grid container spacing={2}>
+        <Grid size={4}>
+       <Userlist/>
+        </Grid>
+        <Grid size={4}>
+       <Userlist/>
+        </Grid>  
+         <Grid size={4}>
+         <Userlist/>
+        </Grid>  
+          <Grid size={4}>
+             <Userlist/>
+          </Grid>          
+        <Grid size={4}>
+          <Userlist/>
+        </Grid>                  
+    </Grid>
       
     </div>
   )
